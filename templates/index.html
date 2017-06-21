@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Stockticker</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.6.min.css" type="text/css" />
+		<link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.6.min.css">
+    	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.6.min.js"></script>
+    	<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.6.min.js"></script>
+    	
+	</head>
+	<body>
+		<div>
+  			<h1>Oakland Stock Ticker</h1>
+		</div>
+		<form id="input" method="post" action="index">	
+	  			<p>
+					Ticker symbol: <input type="text" name="ticker">
+	  			</p>
+	  			<p>
+	    			<input type="submit" value="Submit">
+	  			</p>
+		</form>
+		<div>
+			{% if tickerout %}
+			  <h3>{{tickerout}}</h3>
+			  {{ div | safe }}
+			  {{ script | safe }}
+			{% endif %}
+		</div>
+
+	</body>
+</html>
+
+
+<!-- Source: http://flask.pocoo.org/docs/0.10/quickstart/#rendering-templates -->
+

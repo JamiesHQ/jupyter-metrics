@@ -22,7 +22,7 @@ def index():
 		data = Quandl.get("WIKI/%s" % ticker)
 		print "Got dataframe with", data.size, "elements"
 		plot = figure(
-              title='Data from Quandle WIKI set',
+              title='Jupyter GitHub Metrics',
               x_axis_label='date',
               x_axis_type='datetime')
 		print "Created plot"

@@ -33,25 +33,25 @@ def index():
 		return render_template('index.html', tickerout = request.form["ticker"], script=script, div=div)
 
 #New get from GitHub API - comment out, do not run
-@app.route('/index', methods = ["GET", "POST"])
-def index():
-	if request.method =="GET":
-	  return render_template('index.html')
-	elif request.method == "POST":
-		ticker = request.form["ticker"]
-		print "Ticker is:", ticker
+# @app.route('/index', methods = ["GET", "POST"])
+# def index():
+# 	if request.method =="GET":
+# 	  return render_template('index.html')
+# 	elif request.method == "POST":
+# 		ticker = request.form["ticker"]
+# 		print "Ticker is:", ticker
 
-		data = Quandl.get("WIKI/%s" % ticker)
-		print "Got dataframe with", data.size, "elements"
-		plot = figure(
-              title='Jupyter GitHub Metrics',
-              x_axis_label='date',
-              x_axis_type='datetime')
-		print "Created plot"
-		plot.line(data.index, data['Close'])
-		print "plot.line"
-		script, div = components(plot)
-		return render_template('index.html', tickerout = request.form["ticker"], script=script, div=div)
+# 		data = Quandl.get("WIKI/%s" % ticker)
+# 		print "Got dataframe with", data.size, "elements"
+# 		plot = figure(
+#               title='Jupyter GitHub Metrics',
+#               x_axis_label='date',
+#               x_axis_type='datetime')
+# 		print "Created plot"
+# 		plot.line(data.index, data['Close'])
+# 		print "plot.line"
+# 		script, div = components(plot)
+# 		return render_template('index.html', tickerout = request.form["ticker"], script=script, div=div)
 
 
 

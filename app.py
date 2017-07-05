@@ -8,7 +8,7 @@ import Quandl
 
 app = Flask(__name__)
 
-@app.route('/index_lulu')
+@app.route('/index')
 def index():
 	return render_template('userinfo_lulu.html')
 

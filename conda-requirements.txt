@@ -2,4 +2,4 @@ scipy
 numpy
 pandas
 bokeh
-quandl
+seaborn

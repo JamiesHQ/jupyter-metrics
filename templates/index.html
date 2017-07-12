@@ -3,8 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>JupyterMetrics</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="https://bootswatch.com/spacelab/bootstrap.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.6.min.css" type="text/css" />
 		<link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.6.min.css">
@@ -13,11 +12,18 @@
     	
 	</head>
 	<body>
+		<div class="page-header" id="banner">
+        	<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6">
+		  			<h1 align='center'>Jupyter Metrics</h1>
+		  			<!--<p class="lead">Silvery and sleek</p>-->
+		  		</div>
+		  	</div>
+		 </div>
 		<div>
-  			<h1>Jupyter Metrics</h1>
-  			  {{ div | safe }}
-			  {{ script | safe }}
-		</div>
+            {{ div | safe }}
+			{{ script | safe }}
+          </div>
 		<!--<form id="input" method="post" action="index">	
 	  			<p>
 					Ticker symbol: <input type="text" name="ticker">

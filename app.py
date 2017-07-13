@@ -30,6 +30,7 @@ def index():
 
         # https://stackoverflow.com/questions/39401481/how-to-add-data-labels-to-a-bar-chart-in-bokeh
 
+        ####Start code for Plot1- Comments per Repo (in Jupyter Org)
         counts_per_repo = df.groupby(['org', 'repo'], as_index=False).count().sort_values('number')
         repos = counts_per_repo.repo.values
         numbers = counts_per_repo.number.values
@@ -47,6 +48,22 @@ def index():
         #print "plot.line"
         script, div = components(plot1)
         return render_template('index.html', script=script, div=div)
+
+        ####Start code for Plot2 Comments per User (in Jupyter Org)
+        counts_per_user = df.groupby(['user', 'repo'], as_indes=False).count().sort_values('number')
+        users = counts_per_user.user.values
+        numbers = counts_per_user.number.values
+        source = ColumnDataSource(dict(y=repos.tolist(), x=numbers.tolist()))
+
+        plot2 = figure(x_axis_label='No. Comments', y_axis_label="User Name",  
+              title='Count of Jupyter GitHub Comments per User',
+              x_range=ranges.Range1d(start=0, 
+                                     end=((counts_per_repo.number.max() + 1000) / 1000) * 1000),
+              y_range=source.data["y"],
+              )
+        plot2.hbar(source=source, y='y', height=.50, right='x', left=0)
+
+
 
 #New get from GitHub API - comment out, do not run
 # @app.route('/index', methods = ["GET", "POST"])

@@ -34,18 +34,18 @@ def index():
         repos = counts_per_repo.repo.values
         numbers = counts_per_repo.number.values
         source = ColumnDataSource(dict(y=repos.tolist(), x=numbers.tolist()))
-        plot = figure(x_axis_label='Counts', y_axis_label="Repo",  
+        plot1 = figure(x_axis_label='No. Comments', y_axis_label="Repository",  
                       title='Count of Jupyter GitHub Comments per Repo',
                       x_range=ranges.Range1d(start=0, 
                                              end=((counts_per_repo.number.max() + 1000) / 1000) * 1000),
                       y_range=source.data["y"],
                       )
-        plot.hbar(source=source, y='y', height=.50, right='x', left=0)
+        plot1.hbar(source=source, y='y', height=.50, right='x', left=0)
 
         # print "Created plot"
         #plot.hbar(data.index, data['Close'])
         #print "plot.line"
-        script, div = components(plot)
+        script, div = components(plot1)
         return render_template('index.html', script=script, div=div)
 
 #New get from GitHub API - comment out, do not run

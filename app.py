@@ -5,7 +5,6 @@ from bokeh.embed import components
 import requests
 import os
 import pandas as pd
-import seaborn as sns
 
 app = Flask(__name__)
 

@@ -20,7 +20,7 @@ def index():
         #print "Ticker is:", ticker
 
         #data = Quandl.get("WIKI/%s" % ticker)
-        df = pd.read_csv('issue_comments.csv', sep=',')
+        df = pd.read_csv('issue_comments_jupyter_copy.csv', sep=',')
         #print "Got dataframe with", data.size, "elements"
 
         df['org'] = df['org'].astype('str')

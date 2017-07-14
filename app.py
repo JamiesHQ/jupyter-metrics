@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, ranges, HoverTool
 from bokeh.embed import components
-from bokeh.layouts import column
+from bokeh.layouts import row, column
 import requests
 import os
 import pandas as pd
@@ -42,7 +42,7 @@ def index():
                       title='Count of Jupyter GitHub Comments per Repo',
                       x_range=ranges.Range1d(start=0, 
                                              end=((counts_per_repo.number.max() + 1000) / 1000) * 1000),
-                      y_range=source.data["y"],
+                      y_range=source.data['y'],
                       )
         plot1.hbar(source=source, y='y', height=.50, right='x', left=0)
 
@@ -54,7 +54,7 @@ def index():
 
 
         ####Start code for Plot2 Comments per User (in Jupyter Org)####
-        counts_per_user = df.groupby(['user', 'repo'], as_index=False).count().sort_values('number')
+        counts_per_user = df.groupby(['user'], as_index=False).count().sort_values('number')
         user = counts_per_user.user.values
         numbers = counts_per_user.number.values
         source = ColumnDataSource(dict(y=user.tolist(), x=numbers.tolist()))
@@ -63,11 +63,12 @@ def index():
               title='Count of Jupyter GitHub Comments per User',
               x_range=ranges.Range1d(start=0, 
                                      end=((counts_per_user.number.max() + 1000) / 1000) * 1000),
-              y_range=source.data["y"],
+              y_range=source.data['y'][500:550],
               )
         plot2.hbar(source=source, y='y', height=0.5, right='x', left=0)
 
         
+        ####Start code for Plot3 TSNE Scatter Plot####
         source = ColumnDataSource(df)
         hover = HoverTool(tooltips=[("term", "@term")])
 
@@ -82,15 +83,13 @@ def index():
 
         plot3.circle(x='x', y='y', color='blue', source=source)
 
-        show(plot)
-
-
-
+        p2column= column([plot2])
+        r = row([plot1, p2column])
         #layout = column(p1,p2) - added below from https://campus.datacamp.com/courses/interactive-data-visualization-with-bokeh/layouts-interactions-and-annotations?ex=2
-        script1, div1 = components(plot1)
-        script2, div2 = components(plot2)
-        script3, div3 = components(plot3)
-        return render_template('index.html', script1=script1, div1=div1, script2=script2, div2=div2)
+        script1, div1 = components(r)
+        #script2, div2 = components(plot2)
+        #script3, div3 = components(plot3)
+        return render_template('index.html', script1=script1, div1=div1)
 
 
 

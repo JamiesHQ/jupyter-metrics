@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource, ranges
+from bokeh.models import ColumnDataSource, ranges, HoverTool
 from bokeh.embed import components
 from bokeh.layouts import column
 import requests
@@ -67,9 +67,29 @@ def index():
               )
         plot2.hbar(source=source, y='y', height=0.5, right='x', left=0)
 
+        
+        source = ColumnDataSource(df)
+        hover = HoverTool(tooltips=[("term", "@term")])
+
+        plot3 = figure(
+            plot_width=900,
+            plot_height=700,
+            title='Comments Map by t-SNE',
+            tools='pan,wheel_zoom,box_zoom,reset,hover,previewsave'
+            )
+
+        #plot.add_tools(hover)
+
+        plot3.circle(x='x', y='y', color='blue', source=source)
+
+        show(plot)
+
+
+
         #layout = column(p1,p2) - added below from https://campus.datacamp.com/courses/interactive-data-visualization-with-bokeh/layouts-interactions-and-annotations?ex=2
         script1, div1 = components(plot1)
         script2, div2 = components(plot2)
+        script3, div3 = components(plot3)
         return render_template('index.html', script1=script1, div1=div1, script2=script2, div2=div2)
 
 

@@ -54,16 +54,16 @@ def index():
 
 
         ####Start code for Plot2 Comments per User (in Jupyter Org)####
-        counts_per_user = df.groupby(['user'], as_index=False).count().sort_values('number')
+        counts_per_user = df.groupby(['user'], as_index=False).count().sort_values('number', ascending=False)
         user = counts_per_user.user.values
         numbers = counts_per_user.number.values
         source = ColumnDataSource(dict(y=user.tolist(), x=numbers.tolist()))
 
         plot2 = figure(x_axis_label='No. Comments', y_axis_label="User Name",  
-              title='Count of Jupyter GitHub Comments per User',
+              title='Count of Jupyter GitHub Comments per User (Top 50)',
               x_range=ranges.Range1d(start=0, 
                                      end=((counts_per_user.number.max() + 1000) / 1000) * 1000),
-              y_range=source.data['y'][500:550],
+              y_range=source.data['y'][:50],
               )
         plot2.hbar(source=source, y='y', height=0.5, right='x', left=0)
 

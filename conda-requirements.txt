@@ -3,4 +3,5 @@ numpy
 pandas
 bokeh
 seaborn
+nltk
 vadersentiment

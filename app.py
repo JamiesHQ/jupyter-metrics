@@ -1,13 +1,16 @@
-from flask import Flask, render_template, request, redirect
+from happyfaces import happyfacer
+from flask import Flask, render_template, request, redirect, send_from_directory
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, ranges, HoverTool
 from bokeh.embed import components
 from bokeh.layouts import row, column
 import requests
 import os
+import datetime
 import pandas as pd
+import dill
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 @app.route('/')
 def main():
@@ -18,6 +21,10 @@ def main():
 # layout = row(p1,p2,p3)
 # output_file('row.html')
 # show(layout)
+
+@app.route('/static/<path:path>', methods=["GET"])
+def static_path(path):
+  return send_from_directory('static', path)
 
 #GET request from issue_comments_jupyter_copy.csv
 @app.route('/index', methods = ["GET"])
@@ -89,7 +96,16 @@ def index():
         script1, div1 = components(r)
         #script2, div2 = components(plot2)
         #script3, div3 = components(plot3)
-        return render_template('index.html', script1=script1, div1=div1)
+
+        try:
+          age, happyface = dill.load(open('happyface.dill', 'rb'))
+        except:
+          age = datetime.datetime.now() + datetime.timedelta(days=2)
+
+        if (age - datetime.datetime.now()).total_seconds() > 60*60*24:
+          happyface = happyfacer('issue_comments_jupyter_copy.csv')
+          dill.dump((datetime.datetime.now(), happyface), open('happyface.dill', 'wb'))
+        return render_template('index.html', script1=script1, div1=div1, happyface=happyface)
 
 
 
@@ -117,7 +133,7 @@ def index():
 
 
 if __name__ == '__main__':
-  app.run(port=33507)
+  app.run(port=33507, debug=True)
 
 
 #Sources

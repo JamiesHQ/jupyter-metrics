@@ -24,6 +24,23 @@
             {{ div1 | safe }}
 			{{ script1 | safe }}
          </div>
+         
+         <div class="container">
+         	<div class="row">
+         	<H2>Repo Sentiments</H2>
+         	 <table style="width: auto;" class="table table-condensed">
+         	 {% for repo, row in happyface.iterrows() %}
+         	 	<tr><td>{{repo}}</td><td>{% if row[0] < -0.2 %}
+         	 	<img height="30" width="30" src="static/smiley_sad.png" />
+         	 	{% elif row[0] < 0.2 %}
+         	 	<img height="30" width="30"  src="static/smiley-neutral.png" />
+         	 	{% else %}
+         	 	<img height="30" width="30"  src="static/smiley-happy.png" />
+         	 	{% endif %}</td></tr>
+  			 {% endfor %}
+  			</table>
+  			</div>
+         </div>
        
 		<!--<form id="input" method="post" action="index">	
 	  			<p>

@@ -9,6 +9,8 @@ import os
 import datetime
 import pandas as pd
 import dill
+from rq import Queue
+from worker import conn
 
 app = Flask(__name__, static_url_path='')
 
@@ -30,6 +32,8 @@ def static_path(path):
 @app.route('/index', methods = ["GET"])
 def index():
     if request.method =="GET":
+
+	q = Queue(connection=conn)
 
         df = pd.read_csv('issue_comments_jupyter_copy.csv', sep=',')
 
@@ -103,7 +107,7 @@ def index():
           age = datetime.datetime.now() + datetime.timedelta(days=2)
 
         if (age - datetime.datetime.now()).total_seconds() > 60*60*24:
-          happyface = happyfacer('issue_comments_jupyter_copy.csv')
+          happyface = q.enqueue(happyfacer('issue_comments_jupyter_copy.csv'))
           dill.dump((datetime.datetime.now(), happyface), open('happyface.dill', 'wb'))
         return render_template('index.html', script1=script1, div1=div1, happyface=happyface)
 

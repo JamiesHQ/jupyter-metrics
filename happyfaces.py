@@ -1,26 +1,3 @@
-
-    # coding: utf-8
-
-    # ### Sentiment Analysis
-
-    # # VADER: (Valence Aware Dictionary and sEntiment Reasoner)
-    # 
-    # ### The best way to understand VADER is to look at the source code
-    # (Although it is a little unpolished) https://github.com/cjhutto/vaderSentiment
-    # 
-    # Also see the actual dictionary at https://github.com/cjhutto/vaderSentiment/blob/master/vaderSentiment/vader_sentiment_lexicon.txt.
-    # You can install the code using `pip install vaderSentiment` but it might be better to download it so you can more easily modify it.
-    # 
-    # ### VADER doesn't run in Python 3 because of line 23 in vaderSentiment.py
-    # See issue 11 for a fix: https://github.com/cjhutto/vaderSentiment/issues/11
-
-    # **Resources:**  
-    # https://stackoverflow.com/questions/40325980/how-is-the-vader-compound-polarity-score-calculated-in-python-nltk
-
-    # You have to do this weird import in iPython notebook (Jupyter)
-    # because of the line "reload(sys)" in vaderSentiment.py
-    # See issue 7 for a simple fix: https://github.com/cjhutto/vaderSentiment/issues/7
-    
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 

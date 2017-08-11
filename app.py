@@ -1,4 +1,5 @@
 from happyfaces import happyfacer
+from comment_clusters import get_comment_clusters
 from flask import Flask, render_template, request, redirect, send_from_directory
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, ranges, HoverTool
@@ -9,8 +10,6 @@ import os
 import datetime
 import pandas as pd
 import dill
-from rq import Queue
-from worker import conn
 
 app = Flask(__name__, static_url_path='')
 
@@ -33,14 +32,13 @@ def static_path(path):
 def index():
     if request.method =="GET":
 
-	q = Queue(connection=conn)
-
         df = pd.read_csv('issue_comments_jupyter_copy.csv', sep=',')
 
         df['org'] = df['org'].astype('str')
         df['repo'] = df['repo'].astype('str')
         df['comments'] = df['comments'].astype('str')
         df['user'] = df['user'].astype('str')
+	df['comment_creation_date'] = pd.to_datetime(df['comment_creation_date'])
 
         # https://stackoverflow.com/questions/39401481/how-to-add-data-labels-to-a-bar-chart-in-bokeh
 
@@ -101,15 +99,16 @@ def index():
         #script2, div2 = components(plot2)
         #script3, div3 = components(plot3)
 
+        comment_script, comment_div = components(get_comment_clusters(df))
         try:
           age, happyface = dill.load(open('happyface.dill', 'rb'))
         except:
           age = datetime.datetime.now() + datetime.timedelta(days=2)
 
         if (age - datetime.datetime.now()).total_seconds() > 60*60*24:
-          happyface = q.enqueue(happyfacer, 'issue_comments_jupyter_copy.csv')
+          happyface = happyfacer(df)
           dill.dump((datetime.datetime.now(), happyface), open('happyface.dill', 'wb'))
-        return render_template('index.html', script1=script1, div1=div1, happyface=happyface)
+        return render_template('index.html', script1=script1, div1=div1, happyface=happyface, comment_script=comment_script, comment_div=comment_div)
 
 
 

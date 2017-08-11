@@ -1,16 +1,9 @@
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-jupyter_csv = 'issue_comments_jupyter_copy.csv'    
 
 ## below from http://t-redactyl.io/blog/2017/04/applying-sentiment-analysis-with-vader-and-the-twitter-api.html
-def happyfacer(jupyter_csv):
-
-    df = pd.read_csv(jupyter_csv)
-    df['org'] = df['org'].astype('str')
-    df['repo'] = df['repo'].astype('str')
-    df['comments'] = df['comments'].astype('str')
-    df['user'] = df['user'].astype('str')
+def happyfacer(df):
 
     analyzer = SentimentIntensityAnalyzer()
     vs_comment = []

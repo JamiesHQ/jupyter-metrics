@@ -107,7 +107,7 @@ def index():
           age = datetime.datetime.now() + datetime.timedelta(days=2)
 
         if (age - datetime.datetime.now()).total_seconds() > 60*60*24:
-          happyface = q.enqueue(happyfacer('issue_comments_jupyter_copy.csv'))
+          happyface = q.enqueue(happyfacer, 'issue_comments_jupyter_copy.csv')
           dill.dump((datetime.datetime.now(), happyface), open('happyface.dill', 'wb'))
         return render_template('index.html', script1=script1, div1=div1, happyface=happyface)
 
